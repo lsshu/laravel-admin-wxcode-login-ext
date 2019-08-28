@@ -1,0 +1,34 @@
+{
+    "name": "lsshu/laravel-admin-wxcode-login-ext",
+    "description": "laravel-admin微信扫码录",
+    "type": "library",
+    "keywords": ["lsshu","laravel", "wechat","laravel-admin","admin"],
+    "homepage": "https://github.com/lsshu/laravel-admin-wxcode-login-ext",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lsshu",
+            "email": "admin@lsshu.cn"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "simplesoftwareio/simple-qrcode": "^2.0",
+        "lsshu/wechat": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Lsshu\\LaravelAdminWxcodeLoginExt\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lsshu\\LaravelAdminWxcodeLoginExt\\ServiceProvider"
+            ]
+        }
+    }
+}
