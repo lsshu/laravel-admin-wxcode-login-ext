@@ -10,10 +10,25 @@ $ composer require lsshu/laravel-admin-wxcode-login-ext
 ```
 
 ## Usage
+
+### Publish resources
 ```shell
 $ php artisan vendor:publish --provider="Lsshu\LaravelAdminWxcodeLoginExt\ServiceProvider"
 ```
-TODO
+### Migration
+```shell
+$ php artisan migrate
+```
+### Modify configuration 
+##### file config/admin.php
+```php
+'auth' => [
+    // Redirect to the specified URI when user is not authorized.
+    'redirect_to' => 'code_login',
+],
+```
+###Take Care
+**After installation, administrators may need to manually modify the field “wechat_user_info_id” of the user table to “1”**
 
 ## Contributing
 

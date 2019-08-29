@@ -13,9 +13,10 @@ use Lsshu\Wechat\Service;
 class LoginController extends AuthController
 {
     use StoreTrait;
+
     /**
      * 配置 admin 配置
-     * @param $path
+     * @param string $path
      */
     protected function overrideConfig($path="admin")
     {
@@ -26,6 +27,11 @@ class LoginController extends AuthController
         }
     }
 
+    /**
+     * 授权登录
+     * @param string $path
+     * @return bool|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     protected function authLogin($path = 'admin')
     {
         $config = config('code_login.account',[]);
@@ -43,6 +49,10 @@ class LoginController extends AuthController
         return true;
     }
 
+    /**
+     * 判断是否已经授权登录
+     * @return bool
+     */
     protected function authCheckLogin()
     {
         return ! session()->has('wx_openid');
