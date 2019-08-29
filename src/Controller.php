@@ -69,7 +69,9 @@ class Controller extends LoginController
     {
         $this->overrideConfig($path);
         /*判断微信授权 是否已经登录*/
-        // TODO
+        if($this->authCheckLogin()){
+            return $this->authLogin();
+        }
 
         $wechatUser = WechatUserInfo::where('openid',session('wx_openid'))->first();
         if($wechatUser && $wechatUser->admin_user){
@@ -91,8 +93,10 @@ class Controller extends LoginController
     {
         $this->overrideConfig($path);
         /*判断微信授权 是否已经登录*/
-        // TODO
-        
+        if($this->authCheckLogin()){
+            return $this->authLogin();
+        }
+
         if ($request->isMethod('post')){
             $data = $request->only(['username','name']);
             $data['password'] = bcrypt(config("code_login.login.$path.register_default_password",''));
@@ -106,4 +110,5 @@ class Controller extends LoginController
         $redirect_url = url($this->redirectPath());
         return view('code_login::login.register',compact('redirect_url'));
     }
+
 }

@@ -29,5 +29,9 @@ return [
             'authorize_callback'=>'code_authorize_callback',// 微信授权回调
         ],
         'controller'=>'Controller'
-    ]
+    ],
+    'account'=>[
+        'appId'=>env('ACCOUNT_APPID',''),
+        'appSecret'=>env('ACCOUNT_APPSECRET',''),
+    ], // 微信公众号配置
 ];
