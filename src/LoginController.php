@@ -9,6 +9,7 @@ namespace Lsshu\LaravelAdminWxcodeLoginExt;
 use Encore\Admin\Controllers\AuthController;
 use Lsshu\LaravelAdminWxcodeLoginExt\Models\WechatUserInfo;
 use Illuminate\Http\Request;
+use Lsshu\Wechat\Service;
 class LoginController extends AuthController
 {
     use StoreTrait;
@@ -25,16 +26,16 @@ class LoginController extends AuthController
         }
     }
 
-    protected function authLogin()
+    protected function authLogin($path = 'admin')
     {
         $config = config('code_login.account',[]);
-        $account = Lsshu\Wechat\Service::account($config);
+        $account = Service::account($config);
         if( !session()->has('wx_openid') ){
             /*记录当前地址*/
             session(['wx_current_url'=>url()->full()]);
             // 未登录
             $redirect =$account->getAuthorizeBaseInfo(
-                route(config('code_login.route.name.code_authorize_callback')),
+                route(config('code_login.route.name.authorize_callback','code_authorize_callback'),['path'=>$path]),
                 (isset($this->weLoginType) && $this->weLoginType ==='snsapi_userinfo')?'snsapi_userinfo':'snsapi_base'
             );
             return redirect($redirect);
@@ -55,7 +56,7 @@ class LoginController extends AuthController
     public function code_authorize_callback(Request $request)
     {
         $config = config('code_login.account',[]);
-        $account = Lsshu\Wechat\Service::account($config);
+        $account = Service::account($config);
         $data = $request->all();
         /*获取openid*/
         $result = $account->getAuthorizeUserOpenId($data['code']);

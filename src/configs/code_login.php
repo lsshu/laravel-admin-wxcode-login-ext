@@ -9,7 +9,7 @@
 return [
     'login'=>[
         'admin'=>[
-            'remember'=>false,
+            'remember'=>true,
             'register_default_password'=>'',
         ],
     ],

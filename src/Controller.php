@@ -41,7 +41,7 @@ class Controller extends LoginController
      * 检查登录
      * @return \Illuminate\Http\JsonResponse
      */
-    public function code_check_login($login_string, $path='admin')
+    public function code_check_login($path='admin',$login_string)
     {
         $this->overrideConfig($path);
         if('1' == $this->getStore($login_string)){
@@ -49,7 +49,7 @@ class Controller extends LoginController
             //获取信息用户信息
             $wx_user = WechatUserInfo::where('openid',$openid)->first();
             // 登录操作
-            $this->guard($path)->login($wx_user->admin_user,config("code_login.login.$path.remember",false));
+            $this->guard()->login($wx_user->admin_user,config("code_login.login.$path.remember",true));
             // 清除redis session
             $this->delStore($login_string);
             $this->delStore($login_string.'_id');
@@ -70,7 +70,7 @@ class Controller extends LoginController
         $this->overrideConfig($path);
         /*判断微信授权 是否已经登录*/
         if($this->authCheckLogin()){
-            return $this->authLogin();
+            return $this->authLogin($path);
         }
 
         $wechatUser = WechatUserInfo::where('openid',session('wx_openid'))->first();
@@ -94,7 +94,7 @@ class Controller extends LoginController
         $this->overrideConfig($path);
         /*判断微信授权 是否已经登录*/
         if($this->authCheckLogin()){
-            return $this->authLogin();
+            return $this->authLogin($path);
         }
 
         if ($request->isMethod('post')){
