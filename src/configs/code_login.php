@@ -7,6 +7,16 @@
  */
 
 return [
+    'login'=>[
+        'admin'=>[
+            'remember'=>false,
+            'register_default_password'=>'',
+        ],
+    ],
+    'wechat_user'=>[
+        'table'=>'',
+        'model'=>Lsshu\LaravelAdminWxcodeLoginExt\Models\WechatUserInfo::class,
+    ],
     'route'=>[
         'options'=>[
 

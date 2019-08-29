@@ -17,7 +17,7 @@ trait StoreTrait
      */
     protected function setStore($key,$value)
     {
-        if(config('wx_code_login.store_drive') ==='redis'){
+        if(config('code_login.store_drive') ==='redis'){
             return Redis::set($key,$value);
         }
         return cacheFile($key,$value,storage_path('logs/cache_file_auth_login.php'),'export');
@@ -29,7 +29,7 @@ trait StoreTrait
      */
     protected function getStore($key)
     {
-        if(config('wx_code_login.store_drive') ==='redis'){
+        if(config('code_login.store_drive') ==='redis'){
             return Redis::get($key);
         }
         return cacheFile($key,null,storage_path('logs/cache_file_auth_login.php'),'export');
@@ -42,7 +42,7 @@ trait StoreTrait
      */
     protected function delStore($key)
     {
-        if(config('wx_code_login.store_drive') ==='redis'){
+        if(config('code_login.store_drive') ==='redis'){
             return Redis::del($key);
         }
         return cacheFileDel($key,storage_path('logs/cache_file_auth_login.php'),'export');
