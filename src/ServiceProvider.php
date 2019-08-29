@@ -39,16 +39,17 @@ class ServiceProvider extends BaseServiceProvider
             $router->group(array_merge(['namespace' => __NAMESPACE__], config('code_login.route.options', [])), function ($router) {
                 $name = config('code_login.route.name');
                 $controller = config('code_login.route.controller') ?? 'Controller';
-                $login = $name['login'] ?? 'login';
-                $register = $name['register'] ?? 'register';
-                $code_auth_login = $name['code_auth_login'] ?? 'code_auth_login';
-                $check_login = $name['check_login'] ?? 'check_login';
+                $login = $name['login'] ?? 'code_login';
+                $register = $name['register'] ?? 'code_register';
+                $code_auth_login = $name['auth_login'] ?? 'code_auth_login';
+                $check_login = $name['check_login'] ?? 'code_check_login';
+                $authorize_callback = $name['authorize_callback'] ?? 'code_authorize_callback';
 
-                $router->get('{path}/'.$login,$controller.'@'.$login)->name($login);
-                $router->get('{path}/'.$register,$controller.'@'.$register)->name($register);
-                $router->get('{path}/'.$code_auth_login.'/{login_string}', $controller.'@'.$code_auth_login)->name($code_auth_login);
-                $router->get('{path}/'.$check_login.'/{login_string}', $controller.'@'.$check_login)->name($check_login);
-
+                $router->get('{path}/'.$login,$controller.'@'.$login)->name($login); // 登录
+                $router->get('{path}/'.$register,$controller.'@'.$register)->name($register); // 注册
+                $router->get('{path}/'.$code_auth_login.'/{login_string}', $controller.'@'.$code_auth_login)->name($code_auth_login); // 授权登录
+                $router->get('{path}/'.$check_login.'/{login_string}', $controller.'@'.$check_login)->name($check_login); // 检查是否登录
+                $router->get('{path}/'.$authorize_callback, $controller.'@'.$authorize_callback)->name($authorize_callback); // 微信授权回调
             });
         }
     }
