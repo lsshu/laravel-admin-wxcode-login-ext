@@ -27,7 +27,7 @@ class ServiceProvider extends BaseServiceProvider
             __DIR__.'/resources/views' => resource_path('views'),
         ], 'code-login-resources');
         $this->publishes([
-            __DIR__.'/resources/assets' => public_path('vendor/code-login')
+            __DIR__.'/resources/assets' => public_path('vendor/code_login')
         ], 'code-login-assets');
     }
 

@@ -18,9 +18,11 @@ class LoginController extends AuthController
      */
     protected function overrideConfig($path="admin")
     {
-        $config = require config("admin.extensions.multitenancy.$path");
-        config(['admin' => $config]);
-        config(array_dot(config('admin.auth', []), 'auth.'));
+        if($path!="admin"){
+            $config = require config("admin.extensions.multitenancy.$path");
+            config(['admin' => $config]);
+            config(array_dot(config('admin.auth', []), 'auth.'));
+        }
     }
 
     protected function authLogin()
