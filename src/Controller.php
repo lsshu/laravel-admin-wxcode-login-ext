@@ -54,7 +54,7 @@ class Controller extends LoginController
             $this->delStore($login_string);
             $this->delStore($login_string.'_id');
             // 返回
-            return response()->json(['status'=>'success','text'=>'登录成功！','redirect'=>'/admin']);
+            return response()->json(['status'=>'success','text'=>'登录成功！','redirect'=>url($this->redirectPath())]);
         }else{
             return response()->json(['status'=>'error','text'=>'登录失败！']);
         }

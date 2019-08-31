@@ -39,21 +39,23 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerRoute($router)
     {
         if (!$this->app->routesAreCached()) {
-            $router->group(array_merge(['namespace' => __NAMESPACE__,'middleware' => 'web',], config('code_login.route.options', [])), function ($router) {
-                $name = config('code_login.route.name');
-                $controller = config('code_login.route.controller') ?? 'Controller';
-                $login = $name['login'] ?? 'code_login';
-                $register = $name['register'] ?? 'code_register';
-                $code_auth_login = $name['auth_login'] ?? 'code_auth_login';
-                $check_login = $name['check_login'] ?? 'code_check_login';
-                $authorize_callback = $name['authorize_callback'] ?? 'code_authorize_callback';
+            $router->group(['prefix'=>'{path}'],function($router){
+                $router->group(array_merge(['namespace' => __NAMESPACE__,'middleware' => 'web',], config('code_login.route.options', [])), function ($router) {
+                    $name = config('code_login.route.name');
+                    $controller = config('code_login.route.controller') ?? 'Controller';
+                    $login = $name['login'] ?? 'code_login';
+                    $register = $name['register'] ?? 'code_register';
+                    $code_auth_login = $name['auth_login'] ?? 'code_auth_login';
+                    $check_login = $name['check_login'] ?? 'code_check_login';
+                    $authorize_callback = $name['authorize_callback'] ?? 'code_authorize_callback';
 
-                $router->get('{path}/'.$login,$controller.'@'.$login)->name($login); // 登录
-                $router->get('{path}/'.$register,$controller.'@'.$register)->name($register); // 注册页面
-                $router->post('{path}/'.$register,$controller.'@'.$register)->name($register); // 注册操作
-                $router->get('{path}/'.$code_auth_login.'/{login_string}', $controller.'@'.$code_auth_login)->name($code_auth_login); // 授权登录
-                $router->get('{path}/'.$check_login.'/{login_string}', $controller.'@'.$check_login)->name($check_login); // 检查是否登录
-                $router->get('{path}/'.$authorize_callback, $controller.'@'.$authorize_callback)->name($authorize_callback); // 微信授权回调
+                    $router->get($login,$controller.'@'.$login)->name($login); // 登录
+                    $router->get($register,$controller.'@'.$register)->name($register); // 注册页面
+                    $router->post($register,$controller.'@'.$register)->name($register); // 注册操作
+                    $router->get($code_auth_login.'/{login_string}', $controller.'@'.$code_auth_login)->name($code_auth_login); // 授权登录
+                    $router->get($check_login.'/{login_string}', $controller.'@'.$check_login)->name($check_login); // 检查是否登录
+                    $router->get($authorize_callback, $controller.'@'.$authorize_callback)->name($authorize_callback); // 微信授权回调
+                });
             });
         }
     }

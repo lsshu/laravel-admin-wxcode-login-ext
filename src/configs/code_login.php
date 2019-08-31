@@ -9,8 +9,8 @@
 return [
     'login'=>[
         'admin'=>[
-            'remember'=>true,
-            'register_default_password'=>'',
+            'remember'=>true, // false 值可能出现不能记住登录
+            'register_default_password'=>'', //默认注册密码
         ],
     ],
     'wechat_user'=>[
@@ -19,7 +19,8 @@ return [
     ],
     'route'=>[
         'options'=>[
-
+            //'prefix'=>'lsshu',
+            // ...
         ],
         'name'=>[
             'login'=>'code_login',// 登录
@@ -28,7 +29,7 @@ return [
             'check_login'=>'code_check_login',// 检查是否登录
             'authorize_callback'=>'code_authorize_callback',// 微信授权回调
         ],
-        'controller'=>'Controller'
+        'controller'=>'Controller' // 处理登录 注册方法控制器
     ],
     'account'=>[
         'appId'=>env('ACCOUNT_APPID',''),

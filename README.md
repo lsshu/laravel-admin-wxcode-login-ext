@@ -3,32 +3,36 @@
 <p align="center"> laravel-admin微信扫码录.</p>
 
 
-## Installing
+## 安装
 
 ```shell
 $ composer require lsshu/laravel-admin-wxcode-login-ext
 ```
 
-## Usage
-
-### Publish resources
+### 发布资源
 ```shell
 $ php artisan vendor:publish --provider="Lsshu\LaravelAdminWxcodeLoginExt\ServiceProvider"
 ```
-### Migration
+### 数据迁移
 ```shell
 $ php artisan migrate
 ```
-### Modify configuration 
-##### file config/admin.php
+### 修改配置 
+打开文件 `config/admin.php`
 ```php
 'auth' => [
-    // Redirect to the specified URI when user is not authorized.
-    'redirect_to' => 'code_login',
+    // 如果配置文件config/code_login.php `route.options.prefix` 配置了，请在下面设置相应值
+    'redirect_to' => 'code_login', // {prefix}/code_login
 ],
 ```
-###Take Care
-**After installation, administrators may need to manually modify the field “wechat_user_info_id” of the user table to “1”**
+打开文件 `.env` 添加相应微信公众号配置
+```php
+ACCOUNT_APPID=
+ACCOUNT_APPSECRET=
+```
+###特别注意
+
+**安装完成后，管理员可能需要手动将用户表（如：admin_user）的“wechat_user_info_id”字段修改为“1”**
 
 ## Contributing
 
