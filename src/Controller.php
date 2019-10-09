@@ -83,6 +83,8 @@ class Controller extends LoginController
             return view('code_login::login.choose_or_register',['title'=>'授权提示！','content'=>'授权成功！','description'=>'请先注册账户！正在前往，稍等！','redirect_url'=>$redirect_url]);
         }
         /*授权失败 未有WechatUserInfo*/
+        session(['wx_openid'=>null]);
+        echo '<h3 style="color: green;text-align: center">授权失败！请关闭重试！</h3>';
     }
 
     /**

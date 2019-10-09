@@ -42,7 +42,7 @@ class LoginController extends AuthController
             // 未登录
             $redirect =$account->getAuthorizeBaseInfo(
                 route(config('code_login.route.name.authorize_callback','code_authorize_callback'),['path'=>$path]),
-                (isset($this->weLoginType) && $this->weLoginType ==='snsapi_userinfo')?'snsapi_userinfo':'snsapi_base'
+                ((isset($this->weLoginType) && $this->weLoginType ==='snsapi_base') || (config('code_login.login_type') && config('code_login.login_type')==='snsapi_base'))?'snsapi_base':'snsapi_userinfo'
             );
             return redirect($redirect);
         }
@@ -70,15 +70,17 @@ class LoginController extends AuthController
         $data = $request->all();
         /*获取openid*/
         $result = $account->getAuthorizeUserOpenId($data['code']);
-        if($result['scope'] == 'snsapi_userinfo'){
+        if(isset($result['scope']) && $result['scope'] == 'snsapi_userinfo'){
             $result = $account->getAuthorizeUserInfoByAccessToken($result);
             session(['wx_openid'=>$result['user']['openid'],'wx_user'=>$result['user']]);
             try{
                 WechatUserInfo::updateOrCreate(['openid'=>$result['user']['openid']],$result['user']);
             }catch (Exception $exception){}
-        }else{
+        }elseif(isset($result['openid'])){
             /*保存登录信息*/
             session(['wx_openid'=>$result['openid']]);
+        }else{
+            exit('<h2>授权配置不正确！</h2>');
         }
         /*返回登录前页面*/
         $current_url = session('wx_current_url');

@@ -13,6 +13,7 @@ return [
             'register_default_password'=>'', //默认注册密码
         ],
     ],
+    'login_type'=>'',
     'wechat_user'=>[
         'table'=>'',
         'model'=>Lsshu\LaravelAdminWxcodeLoginExt\Models\WechatUserInfo::class,
