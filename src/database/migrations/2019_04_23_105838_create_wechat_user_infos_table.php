@@ -15,6 +15,7 @@ class CreateWechatUserInfosTable extends Migration
     {
         Schema::create('wechat_user_infos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('path',20)->nullable()->comment('站点');
             $table->string('openid',30)->nullable()->comment('OPENID');
             $table->string('nickname',50)->nullable()->comment('昵称');
             $table->tinyInteger('sex')->nullable()->comment('性别');

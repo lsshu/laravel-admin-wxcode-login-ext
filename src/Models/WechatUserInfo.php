@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class WechatUserInfo extends BaseModel
 {
     use SoftDeletes;
-    protected $fillable = ['openid','nickname','sex','language','city','province','country','headimgurl'];
+    protected $fillable = ['path','openid','nickname','sex','language','city','province','country','headimgurl'];
 
     const SEX = '0';
     const SEX_MALE = '1';

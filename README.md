@@ -24,11 +24,17 @@ $ php artisan migrate
     // 如果配置文件config/code_login.php `route.options.prefix` 配置了，请在下面设置相应值
     'redirect_to' => 'code_login', // {prefix}/code_login
 ],
+
+'account'=>[
+    'appId'=>env(strtoupper(substr(basename(__FILE__),0,strrpos(basename(__FILE__),'.'))).'_ACCOUNT_APPID',''),
+    'appSecret'=>env(strtoupper(substr(basename(__FILE__),0,strrpos(basename(__FILE__),'.'))).'_ACCOUNT_APPSECRET',''),
+], // 微信公众号配置
 ```
 打开文件 `.env` 添加相应微信公众号配置
 ```php
-ACCOUNT_APPID=
-ACCOUNT_APPSECRET=
+ADMIN_ACCOUNT_APPID=
+ADMIN_ACCOUNT_APPSECRET=
+
 ```
 ###特别注意
 
